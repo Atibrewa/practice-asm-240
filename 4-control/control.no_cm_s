@@ -1,0 +1,56 @@
+	.file	"control.c"
+	.text
+	.globl	absdiff
+	.type	absdiff, @function
+absdiff:
+.LFB0:
+	.cfi_startproc
+	cmpq	%rsi, %rdi
+	jle	.L2
+	movq	%rdi, %rax
+	subq	%rsi, %rax
+	ret
+.L2:
+	movq	%rsi, %rax
+	subq	%rdi, %rax
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	absdiff, .-absdiff
+	.globl	absdiff_j
+	.type	absdiff_j, @function
+absdiff_j:
+.LFB1:
+	.cfi_startproc
+	cmpq	%rsi, %rdi
+	jle	.L5
+	movq	%rdi, %rax
+	subq	%rsi, %rax
+	ret
+.L5:
+	movq	%rsi, %rax
+	subq	%rdi, %rax
+.L6:
+	ret
+	.cfi_endproc
+.LFE1:
+	.size	absdiff_j, .-absdiff_j
+	.globl	absdiff_cm
+	.type	absdiff_cm, @function
+absdiff_cm:
+.LFB2:
+	.cfi_startproc
+	movq	%rdi, %rdx
+	subq	%rsi, %rdx
+	movq	%rsi, %rax
+	subq	%rdi, %rax
+	cmpq	%rsi, %rdi
+	jle	.L8
+	movq	%rdx, %rax
+.L8:
+	rep ret
+	.cfi_endproc
+.LFE2:
+	.size	absdiff_cm, .-absdiff_cm
+	.ident	"GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4"
+	.section	.note.GNU-stack,"",@progbits

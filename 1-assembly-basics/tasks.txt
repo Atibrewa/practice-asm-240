@@ -1,0 +1,6 @@
+%rdi, %rsi are registers - for 8 bytes (64 bit)
+%rdi holds first arg, $rsi holds second
+
+Int values: It changes from %rax to %eax - e is for 4 bytes (32 bit) (int)
+the others also change to e instead of r but the ($rdi) and (%rsi) remain the same so the
+memory locations are the same? or they are moving it to 8-byte addresses

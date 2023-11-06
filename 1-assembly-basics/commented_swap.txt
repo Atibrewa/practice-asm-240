@@ -1,0 +1,22 @@
+	.file	"swap.c"
+	.text
+	.globl	swap
+	.type	swap, @function
+swap:
+.LFB0:
+	.cfi_startproc 			/* start of the code */
+
+	movq	(%rdi), %rax 	/* long t0 = *xp;
+								%rax contains t0 */
+	movq	(%rsi), %rdx	/* long t1 = *yp; 
+								%rdx contains t1 */
+	movq	%rdx, (%rdi) 	/* *xp = t1; 
+								%rdi contains t1 */
+	movq	%rax, (%rsi)    /* *yp = t0; 
+								%rsi contains t0 */
+	ret	
+	.cfi_endproc			/* end of code! */
+.LFE0:
+	.size	swap, .-swap
+	.ident	"GCC: (GNU) 8.3.1 20190311 (Red Hat 8.3.1-3)"
+	.section	.note.GNU-stack,"",@progbits

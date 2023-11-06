@@ -1,0 +1,50 @@
+	.file	"arith.c"
+	.text
+	.globl	plus
+	.type	plus, @function
+plus:								// This is where the function plus() starts
+.LFB0:				
+	.cfi_startproc					// %rdi has arg x, %rsi has y
+	leaq	(%rdi,%rsi), %rax		// computes x + 1*y + 0 (because D is 0 and S is 1) and puts it in %rax
+	ret								// returns the value in %rax :)
+	.cfi_endproc
+.LFE0:
+	.size	plus, .-plus
+	.globl	arith
+	.type	arith, @function
+arith:								// arith() starts here!
+.LFB1:
+	.cfi_startproc					// %rdi has arg x, %rsi has y, %rdx has z
+	leaq	(%rdi,%rsi), %rax		// computes x + 1*y + 0 (because D is 0 and S is 1) and puts it in %rax (t1)
+	addq	%rdx, %rax				// adds z to the value in %rax (so rax is currently x + y + z) (t2)
+	leaq	(%rsi,%rsi,2), %rcx		// computes y + 2y = 3y and places it in a new register rcx 
+	salq	$4, %rcx				// shifts the value in rcx to the left by 4, thus giving t4 = (3y)*16 = 48y
+	leaq	4(%rdi,%rcx), %rcx		// combines lines 12 and 14 to give x + 4 + t4 in rcx (t5)
+	imulq	%rcx, %rax				// multiplies the vals in rcx, rax and places it in rax
+	ret								// returns the value in rax!
+	.cfi_endproc
+.LFE1:
+	.size	arith, .-arith
+	.globl	m12
+	.type	m12, @function
+m12:								// m12() starts here
+.LFB2:
+	.cfi_startproc					// rdi has the arg x
+	leaq	(%rdi,%rdi,2), %rax		// computes x + 2*x + 0 (D is 0, S is 2) and puts it in %rax
+	salq	$2, %rax				// shifts the value in rax by 2, thus multiplying by 4 = (3*x)*4 = 12*x
+	ret								// returns the value in rax!
+	.cfi_endproc
+.LFE2:
+	.size	m12, .-m12
+	.globl	scale
+	.type	scale, @function
+scale:								// scale() starts here
+.LFB3:
+	.cfi_startproc					// rdi has x, rsi has y, rdx has z but is not used
+	leaq	4(%rdi,%rsi,8), %rax	// computes rdi + 8*rsi + 4 = x + 8y + 4 (D = 4, S = 8) and places it in rax
+	ret								// returns the value in rax :)
+	.cfi_endproc
+.LFE3:
+	.size	scale, .-scale
+	.ident	"GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4"
+	.section	.note.GNU-stack,"",@progbits

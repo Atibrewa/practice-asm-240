@@ -1,0 +1,40 @@
+	.file	"gt.c"
+	.text
+	.globl	gt
+	.type	gt, @function
+gt:
+.LFB0:
+	.cfi_startproc
+	cmpq	%rsi, %rdi		// computes x-y and sets the control bits, CF, ZF, SF, OF based on the results
+	setg	%al				// computes 0 or 1 based on the control bits and a given expression ~(SF^OF)&~ZF
+	movzbl	%al, %eax		// puts value 0 or 1 in eax and zeros al leading bits
+	ret						// returns value in rax!
+	.cfi_endproc
+.LFE0:
+	.size	gt, .-gt
+	.globl	zero
+	.type	zero, @function
+zero:
+.LFB1:
+	.cfi_startproc
+	testq	%rdi, %rdi		// checks x&x. it is only zero if x is zero
+	sete	%al				// sets al to 0 or 1 based on ZF
+	movzbl	%al, %eax		// puts value 0 or 1 in eax and zeros al leading bits
+	ret						// returns value in rax!
+	.cfi_endproc
+.LFE1:
+	.size	zero, .-zero
+	.globl	geq
+	.type	geq, @function
+geq:
+.LFB2:
+	.cfi_startproc
+	cmpq	%rsi, %rdi
+	setge	%al				// uses setge instead of setg so the expression is different!
+	movzbl	%al, %eax
+	ret
+	.cfi_endproc
+.LFE2:
+	.size	geq, .-geq
+	.ident	"GCC: (GNU) 8.3.1 20190311 (Red Hat 8.3.1-3)"
+	.section	.note.GNU-stack,"",@progbits

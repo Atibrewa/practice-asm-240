@@ -1,0 +1,18 @@
+What does ‘movslq’ do? 
+Why is the movslq operation being used on the input parameter named z to move it into a register? 
+Compare this to the other possible mov operations.
+
+movslq moves the value z from edx to rax which puts it
+in an 8 byte register. This operation is being used because
+it is a signed int and needs to be turned into a long using signed
+bit extension so that computation with other long values is easy. 
+Alternatively movzlq would used zero-extension and if z were
+negative, it would be turned into a positive number instead.
+
+
+What operations are performing the widenings in the assembly code for `arith_u`? 
+Why is each of these used—what is the difference between them? 
+Can you think of why the operations ending in l (eg movzbl) were sufficient and therefore chosen by the compiler?
+movzbl and movzwl are widening x and y. 'b' is used because x is a char, and 'w' because
+y is a short. It might change them only to double work and not to long (8 byte) because it
+already knows that the higher bits will be zero?

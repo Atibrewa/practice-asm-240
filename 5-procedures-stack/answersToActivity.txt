@@ -1,0 +1,14 @@
+Talk with your table about how this objecct dump compares to the C source. Document your observations in a text file.
+
+the instructions look very different than in a .s file.
+multstore starts from line 107, before this, there are a lot of functions
+such as init, start, plt, etc that i dont understand
+Once these other functions or methods complete setup, then
+multstore is called. 
+The code works such that main is where it starts, then multstore
+is called from mstore, which in turn calls mult2 from main. In 
+the assembly, we see the code for multstore written first,
+then mult2, then main.
+After the code runs, there are some other functions/methods at the
+bottom that seem to round up and end the program, similar to the ones that
+do setup!
